@@ -6,6 +6,7 @@ param(
 
 #Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
+Write-Host "Checking basic Windows Security settings."
 
 If (-not ($env:OS -Match "Win*")) {
     Write-Warning "Unsupported operating system."
@@ -29,7 +30,7 @@ if ($updates.Count -ge 1 ){
         }
 }
 Else{
-    Write-output "Windows Updates: =>OK"
+    Write-Host "Windows Updates: =>OK" -Foregroundcolor Green
 }
 #AV status
 [system.Version]$OSVersion = (Get-WmiObject win32_operatingsystem -computername $CompName).version
@@ -45,7 +46,7 @@ If ($OSVersion -ge [system.version]'6.0.0.0')
 
 #very unlikely to get here in modern Windows       
 if ($AntiVirusProduct.Count -eq 0) {
-    Write-Warning "Antivirus check: no such product found in this system. => NOK"
+    Write-Host "Antivirus check: no such product found in this system. => NOK" -Foregroundcolor Red
     Exit
  }
  
@@ -73,10 +74,10 @@ foreach($productState in $productStates){
 }   
 
 if ($AvSecuritySignatureStatusOkCount -eq 0 )  {
-    Write-Warning "Antivirus check: all your Antivirus definitions are Out of Date.=>NOK" 
+    Write-Host "Antivirus check: all your Antivirus definitions are Out of Date.=>NOK" -Foregroundcolor Yellow
 }   
 Else   {           
-    Write-output "Antivirus check: =>OK"       
+     Write-Host "Antivirus check: =>OK" -Foregroundcolor Green 
             
 } 
 
