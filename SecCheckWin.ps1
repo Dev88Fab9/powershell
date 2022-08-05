@@ -7,7 +7,7 @@ param(
 #Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 [String[]]$CompName=$env:computername   
 
-function Get-SysUpd($CompName){     
+function Get-SysUpd ($CompName) {     
 
 
     #List all missing updates
@@ -19,7 +19,7 @@ function Get-SysUpd($CompName){
     #Updates are waiting to be installed 
     $updates = $result.Updates;
 
-    if ($updates.Count -ge 1 ){
+    if ($updates.Count -ge 1 ) {
         Write-Host "Windows Updates: found $($updates.Count) to be installed. =>NOK" -Foregroundcolor Red
         if ($dbglevel -eq "--verbose"){
             $updates | Format-Table Title, AutoSelectOnWebSites, IsDownloaded, IsHiden, IsInstalled, IsMandatory, IsPresent, AutoSelection, AutoDownload -AutoSize
@@ -31,7 +31,7 @@ function Get-SysUpd($CompName){
 }
 
 
-function Get-AvStatus($CompName){   
+function Get-AvStatus ($CompName) {   
 
     #AV status
     [system.Version]$OSVersion = (Get-WmiObject win32_operatingsystem -computername $CompName).version
@@ -81,7 +81,7 @@ function Get-AvStatus($CompName){
 }
 
 
-function Get-FWStatus($CompName){
+function Get-FWStatus ($CompName) {
     
     $nofw = 1
     #Check external FW
