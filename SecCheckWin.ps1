@@ -145,6 +145,18 @@ function Get-FWStatus ($CompName) {
     Return $nofw
 }   
 
+Function Get-Telemetry () {
+            $isTelemetryOn = $false
+            $FWService = (Get-Service | ?{$_.Name -eq "DiagTrack"})
+            if ($FWService.Name -eq "DiagTrack" -And  $FWService.Status -eq "Running"){
+                    $isTelemetryOn = $true
+                                    }
+
+    Return $isTelemetryOn                                       
+                                    
+}   
+    
+
 
 #Main
 Write-Host "Checking basic Windows Security settings."
@@ -164,5 +176,14 @@ if ($nofw -eq 0){
 Else {
     Write-Host "Firewall status  =>NOK"  -Foregroundcolor Yellow
      } 
+     
+     
+$isTelemetryOn = Get-Telemetry
 
+If ($isTelemetryOn -eq $true){
+    Write-Host "Windows Telemetry (the dmwappushservice service) is ON." =>NOK -Foregroundcolor Yellow
+    }
+Else {
+    Write-Host "Windows Telemetry is OFF." =>OK -Foregroundcolor Green
+    }
 Exit
