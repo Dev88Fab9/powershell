@@ -157,6 +157,11 @@ Function Get-Telemetry () {
 }   
     
 
+function Get-DNSServers () {
+	
+    Get-DnsClientServerAddress
+
+}
 
 #Main
 Write-Host "Checking basic Windows Security settings."
@@ -186,4 +191,9 @@ If ($isTelemetryOn -eq $true){
 Else {
     Write-Host "Windows Telemetry is OFF." =>OK -Foregroundcolor Green
     }
+	
+Write-Host "DNS Client Servers.."
+Get-DNSServers
+	
+	
 Exit
